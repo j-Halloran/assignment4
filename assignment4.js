@@ -11,6 +11,26 @@
 // $.html(), $.text(), etc.
 // keyup events could be helpful to get value of field as the user types
 
+$(document).ready(function(){
+  $("#prediction").hide()
+});
+
+$("#searchBar").keypress(function(){
+  var jsonHolder;
+  $.ajax({
+    dataType: "json",
+    url: "http://www.mattbowytz.com/simple_api.json?data=all",
+    data: jsonHolder,
+    success: handleResponse
+  });
+});
+
+function handleResponse(responseData){
+  $("#prediction").text(responseData);
+  $("#prediction").show();
+}
+
+
 (function() {
   // Magic!
   console.log('Keepin\'n it clean with an external script!');
