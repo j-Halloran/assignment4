@@ -11,14 +11,15 @@
     <div class="flexsearch">
       <div class="flexsearch-wrapper">
         <!-- You'll handle the form with js, so no need for method and action -->
-        <form class="flexsearch-form" id="mainForm">
+        <!--Autocomplete off to stop chrome from making its own suggestions haha-->
+        <form class="flexsearch-form" id="mainForm" autocomplete="off">
           <div class="flexsearch-input-wrapper">
             <input class="flexsearch-input" type="search" placeholder="search" id="searchBar">
           </div>
           <input class="flexsearch-submit" type="submit" value="&#10140;"/>
         </form>
 
-        <p id="prediction"></p>
+        <a href="/" id="prediction"></a>
       </div>
     </div>
 

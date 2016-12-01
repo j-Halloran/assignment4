@@ -2,6 +2,22 @@
   Don't forget to style the results from the search!
   And anything elese you add to the application, for that matter.
 */
+a{
+  color:black;
+}
+
+#prediction{
+  margin-left: 1%;
+  display:block;
+  border: 2px solid black;
+  border-radius: 20px;
+  width: 97%;
+  transition: font-size 1s;
+}
+
+#prediction:hover{
+  font-size: 1.4rem;
+}
 
 .flexsearch-wrapper {
   height: auto;

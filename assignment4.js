@@ -11,25 +11,55 @@
 // $.html(), $.text(), etc.
 // keyup events could be helpful to get value of field as the user types
 
-$(document).ready(function(){
-  $("#prediction").hide()
-});
+var $dataArray = new Array();
 
-$("#searchBar").keypress(function(){
+$(document).ready(function(){
   var jsonHolder;
+  $("#prediction").hide()
   $.ajax({
-    dataType: "json",
+    dataType: 'json',
     url: "http://www.mattbowytz.com/simple_api.json?data=all",
     data: jsonHolder,
-    success: handleResponse
+    success: function (response) {
+              //done as two steps incase comics somehow returns first
+              $dataArray = $.merge(response.data.interests,$dataArray);
+              $dataArray = $.merge(response.data.programming,$dataArray);
+            }
+  });
+  $.ajax({
+    dataType: 'json',
+    url: "http://www.mattbowytz.com/simple_api.json?data=comics",
+    data: jsonHolder,
+    success: function (response) {
+              $dataArray = $.merge(response.data,$dataArray);
+            }
   });
 });
 
-function handleResponse(responseData){
-  $("#prediction").text(responseData);
-  $("#prediction").show();
-}
+$("#searchBar").keyup(function(event){
+  var i =0;
+  if(event.which==16){
+    return;
+  }
 
+  var $bestMatch = 'No Match Found';
+  var $maxLength = 0;
+  var $searchText = $("#searchBar").val().toLowerCase();
+  var $temp;
+
+  if($searchText.length==0){$("#prediction").hide(); return;}
+  for(i = 0; i<$dataArray.length; i++){
+    $temp = $dataArray[i].toLowerCase();
+    if($temp.substring(0,$searchText.length)==$searchText){
+      $bestMatch = $dataArray[i];
+      break;
+    }
+  }
+  $temp = 'https://www.google.com/#q='.$bestMatch;
+  $("#prediction").text($bestMatch);
+  $("#prediction").prop("href",'https://www.google.com/#q='+$bestMatch);
+  $("#prediction").show();
+});
 
 (function() {
   // Magic!
